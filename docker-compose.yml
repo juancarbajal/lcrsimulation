@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  db_redis:
+    container_name: db_redis
+    # build: migration 
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - ./db:/data
+      
+  app_main:
+    container_name: app_main
+    build: src/app
+    ports:
+      - "5000:5000"
+    restart: always
+    depends_on:
+      - db_redis
+      - app_lambda
+    environment:
+      DYNAMO_ZONE: us-east-1
+      REDIS_HOST: db_redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      LAMBDA_HOST: app_lambda
+      LAMBDA_PORT: 8080
+      APP_PORT: 5000
+      EVENTBRIDGE_NAME: LCRbus;
+      AWS_REGION: ${AWS_REGION}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+  app_lambda:
+    container_name: app_lambda
+    build: src/lambda
+    restart: always
+    ports:
+      - "9000:8080"
+      
+volumes:
+  db_redis:
+    driver: local

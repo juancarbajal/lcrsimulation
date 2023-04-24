@@ -1,0 +1,10 @@
+.env
+src/lambda/node_modules
+src/lambda/package-lock.json
+src/app/node_modules
+src/app/package-lock.json
+db/dump.rdb
+#*
+.#*
+infra/readme.txt
+infra/.terraform
