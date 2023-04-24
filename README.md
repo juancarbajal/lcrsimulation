@@ -28,8 +28,8 @@ Para ejecutar es necesario tener instalado:
 1. Copiamos el archivo .env.sample a .env y configuramos los valores de conexión a AWS :
 ```
 AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=AKIAQQ4WWS2VYVF2B73T
-AWS_SECRET_KEY=RaTr150fSBLT/33GCN6yiFgcl5b1N+bvawMErflk
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_KEY=
 ```
 
 2. Ingresar a la carpeta infra y ejecutar terraform:
